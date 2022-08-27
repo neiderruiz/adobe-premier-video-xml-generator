@@ -31,3 +31,14 @@ pip install -r requirements.txt
 ```
 py main.py
 ```
+# Generar ejecutable .exe
+
+- ejecutamos el comando
+
+```
+pyinstaller --noconsole '.\main.py'
+```
+
+- se creara una carpeta **dist** y otra **build**
+
+- ingresas a **dist/main** y encontraras un archivo main.exe el cual puedes ejecutar pulsando en el
