@@ -1,4 +1,5 @@
 # adobe-premier-video-xml-generator
+![image](https://user-images.githubusercontent.com/57574910/187046129-21fef922-1c65-475a-af55-c595021e6840.png)
 ## instalación
 
 * ### Clonar repositiorio
@@ -42,3 +43,5 @@ pyinstaller --noconsole '.\main.py'
 - se creara una carpeta **dist** y otra **build**
 
 - ingresas a **dist/main** y encontraras un archivo main.exe el cual puedes ejecutar pulsando en el
+
+
