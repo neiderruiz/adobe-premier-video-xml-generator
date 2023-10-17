@@ -6,7 +6,7 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('./base.xml', '.')],
+    datas=[('./base.xml', '.'),('./assets/icon.ico','./assets/')],
     hiddenimports=['moviepy', 'librosa'],
     hookspath=['./hooks'],
     hooksconfig={},
