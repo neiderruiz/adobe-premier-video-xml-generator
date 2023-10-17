@@ -1,107 +1,172 @@
-from logging import PlaceHolder
-import os
-from itertools import count
-import librosa
-import librosa.display
-import matplotlib.pyplot as plt
-from moviepy.editor import VideoFileClip
-import tkinter
-from tkinter import StringVar, ttk, filedialog as fd, simpledialog, messagebox
-from modules import actions
-# filename = librosa.util.example('brahms')
+import tkinter as tk
+from tkinter import ttk, filedialog as fd, messagebox
 import threading
+from modules import actions
+class App(tk.Tk):
+    def __init__(self):
+        super().__init__()
 
-import time
+        self.title('Convert Premier')
 
-root = tkinter.Tk()
-nameFile = StringVar()
-loading = StringVar()
-routeProject = StringVar()
+        self.frm = ttk.Frame(self, padding=10, width=300, height=400)
+        self.frm.grid()
 
-def editVideo(newVideo: str, nameProject: str,loading):
-    if newVideo == '':
-        messagebox.showerror('Error', 'Selecciona un archivo')
-        return
-    if nameProject == '':
-        messagebox.showerror('Error', 'Ingresar nombre de proyecto')
-        return
-    nameProject = nameProject.lower().replace(' ','-')
-    nameFolder = f"projects/{nameProject}"
-    if os.path.isdir(nameFolder) is not True:
-        os.makedirs(nameFolder.lower())
+        self.setup_styles()
+        self.setup_widgets()
+
+    def setup_styles(self):
+        self.style = ttk.Style()
+        self.style.configure(
+            'TEntry',
+            padding=[5, 2],
+            font=('Arial', 12),
+            fieldbackground='white',
+            foreground='black',
+            borderwidth=2,
+            relief='solid',
+            bordercolor='#ccc'
+        )
+        self.style.configure(
+            'TButton',
+            padding=[5, 5],
+            font=('Arial', 12),
+            relief='raised',
+            borderwidth=2,
+        )
+        self.style.configure(
+            'TLabel',
+            font=('Arial', 12),
+        )
+        self.style.configure(
+            'TLabelFrame',
+            font=('Arial', 12, 'bold'),
+            borderwidth=2,
+            relief='solid',
+        )
+
+    def setup_widgets(self):
+        self.nameProject_entry, _ = self.create_entry(
+            self.frm, "Nombre del proyecto", 0, 0)
+        self.select_file_btn = self.create_button(
+            self.frm, "Select File", self.select_file, 2, 0)
+
+        self.process_video_btn = self.create_button(
+            self.frm, "Procesar Video", self.process_video, 3, 0)
+
+        # Crear un LabelFrame para el grupo Miniatura
+        self.miniature_frame = ttk.LabelFrame(
+            self.frm, text="Miniatura", padding=(10, 5))
+        self.miniature_frame.grid(
+            column=0, row=4, padx=10, pady=10, sticky=(tk.W, tk.E))
+
+        # Crear las entradas para el grupo Miniatura
+        self.scale_var = tk.StringVar(value='25')
+        self.scale_entry, self.scale_label = self.create_entry(
+            self.miniature_frame, "Escala", 0, 0, validate=True, textvariable=self.scale_var)
+
+        self.right_cut_percentage_var = tk.StringVar(value='0')
+        self.right_cut_percentage_entry, _ = self.create_entry(
+            self.miniature_frame, "Porcentaje de corte a la derecha", 1, 0, textvariable=self.right_cut_percentage_var)
+
+        self.left_cut_percentage_var = tk.StringVar(value='50')
+        self.left_cut_percentage_entry, _ = self.create_entry(
+            self.miniature_frame, "Porcentaje de corte a la izquierda", 1, 1, textvariable=self.left_cut_percentage_var)
+
+        self.vertical_position_var = tk.StringVar(value='0.354622')
+        self.vertical_position_entry, _ = self.create_entry(
+            self.miniature_frame, "Posición vertical miniatura", 2, 0, textvariable=self.vertical_position_var)
+
+        self.horizontal_position_var = tk.StringVar(value='0.119977')
+        self.horizontal_position_entry, _ = self.create_entry(
+            self.miniature_frame, "Posición horizontal miniatura", 2, 1, textvariable=self.horizontal_position_var)
+
+        self.hide_miniature_frame_and_button()
+
+        self.file_label = ttk.Label(self.frm, text="")
+        self.file_label.grid(column=0, row=5)
+
+    def create_entry(self, parent, label_text, row, column, validate=False, textvariable=None):
+        label = ttk.Label(parent, text=label_text)
+        label.grid(column=column, row=row * 2)
+
+        if validate:
+            validate_command = self.register(self.validate_input)
+            entry = ttk.Entry(parent, width=40, validate='key', validatecommand=(
+                validate_command, '%P'), textvariable=textvariable)  # Cambié width a 40
+        else:
+            # Cambié width a 40
+            entry = ttk.Entry(parent, width=40, textvariable=textvariable)
+
+        entry.grid(column=column, row=row * 2 + 1)
+        return entry, label  # Devuelve tanto la entrada como la etiqueta
+
+    def create_button(self, parent, text, command, row, column):
+        btn = ttk.Button(parent, text=text, command=command)
+        btn.grid(column=column, row=row)
+        return btn
+
+    def select_file(self):
+        filename = fd.askopenfilename(
+            filetypes=[('videos', '*.mp4'), ('All files', '*.*')])
+        if filename:  # Si un archivo fue seleccionado
+            self.file_label.config(text=filename)
+            self.show_miniature_frame_and_button()
+        else:  # Si no se seleccionó ningún archivo (se presionó 'Cancelar')
+            self.hide_miniature_frame_and_button()
+
+    def process_video(self):
+        new_video = self.file_label.cget("text")
+        name_project = self.nameProject_entry.get()
+        # Suponiendo que quieres mostrar el estado en la interfaz, podrías necesitar una etiqueta para mostrar esto
+        loading = tk.StringVar()
+
+        # Puedes crear una etiqueta para mostrar el estado de 'loading' si lo deseas
+        loading_label = ttk.Label(self.frm, textvariable=loading)
+        # Ajusta la fila y columna como necesites
+        loading_label.grid(column=0, row=6)
+
+        run_translate(
+            new_video,
+            name_project,
+            loading,
+            miniature={
+                'scale': self.scale_var.get(),
+                'right_cut_percentage': self.right_cut_percentage_var.get(),
+                'left_cut_percentage': self.left_cut_percentage_var.get(),
+                'vertical_position': self.vertical_position_var.get(),
+                'horizontal_position': self.horizontal_position_var.get(),
+            }
+        )
+
+    def validate_input(self, value_if_allowed):
+        if value_if_allowed == '' or value_if_allowed.isdigit():
+            return True
+        return False
+
+    def show_miniature_frame_and_button(self):
+        self.miniature_frame.grid(
+            column=0, row=4, padx=10, pady=10, sticky=(tk.W, tk.E))
+        self.process_video_btn.grid(column=0, row=3)  # Muestra el botón
+
+    def hide_miniature_frame_and_button(self):
+        self.miniature_frame.grid_remove()
+        self.process_video_btn.grid_remove()  # Oculta el botón
 
 
-    loading.set('procesando...')
-    
+def run_translate(new_video: str, name_project: str, loading, miniature: dict = None):
+    print(miniature)
 
-    templateAdobe = open('./base.xml')
-    nameFileXml =f"./{nameFolder}/{nameProject}.xml"
-    ourputAdobe = open(nameFileXml, 'w')
-    video = VideoFileClip(newVideo)
-    nameAudio = f"./{nameFolder}/{nameProject}.mp3"
-    video.audio.write_audiofile(nameAudio)
-
-    duration = video.duration * 60
-    videoName = video.filename
-    baseVideo = os.path.realpath(videoName).replace('\\', '/').split(':')
-    routeVideo = f"file://localhost/{baseVideo[0]}%3a{baseVideo[1]}"
-    baseAudio = os.path.realpath(nameAudio).replace('\\', '/').split(':')
-    routeAudio = f"file://localhost/{baseAudio[0]}%3a{baseAudio[1]}"
-    routeProject.set(os.path.realpath(nameFolder))
-
-    y, sr = librosa.load(nameAudio)
-
-    tik = 254016000000
-    corteArrStart, startCorte = actions.getTimeStart(y, sr)
-    corteArrEnd, endCorte = actions.getTimeEnd(y, sr)
-
-    startFrame = float(len(corteArrStart) / sr) * 60
-    tiksStart = float(startCorte * tik)
-    tiksAudioEnd = float(endCorte * tik) - tiksStart
-    endCorte = ((len(y) - (len(corteArrEnd) + len(corteArrStart))) / sr) * 60
-
-    values = {"videoName": videoName, "routeVideo": routeVideo, "routeAudio": routeAudio,
-              "startFrame": f"{startFrame}", "tiksStart": f"{tiksStart}", "endCorte": f"{endCorte}"}
-    finish = actions.fillTemplate(templateAdobe, ourputAdobe, values)
-    if finish:
-        print('terminate')
-        loading.set('terminado')
-        messagebox.showinfo('Correcto', 'Configuracion de proyecto terminada')
-        # time.sleep(5)
-        # loading.set('')
+    t = threading.Thread(target=actions.edit_video, args=(
+        new_video,
+        name_project,
+        loading,
+        miniature
+    ))
+    t.start()
 
 
 
-frm = ttk.Frame(root, padding=10, width=300, height=400)
-frm.grid()
-root.title('Convert Premier')
-style = ttk.Style()
 
-style.configure('TButton', font=('calibri', 10, 'bold', ),
-                )
-
-style.map('TButton', foreground=[('active', '!disabled', 'green')],
-          background=[('active', 'black')])
-
-
-def SelectFile():
-    filename = fd.askopenfilename(filetypes=filetypes)
-    nameFile.set(filename)
-
-
-nameProject = ttk.Entry(frm, width=80)
-nameProject.grid(column=0, row=1)
-urlProject = ttk.Entry(frm, width=80, textvariable=routeProject)
-urlProject.grid(column=0, row=8)
-
-ttk.Label(frm, text='Nombre del proyecto').grid(column=0, row=0)
-ttk.Button(frm, text="Select File", command=SelectFile).grid(column=0, row=2)
-label = ttk.Label(root, textvariable=nameFile).grid(column=0, row=3)
-ttk.Button(frm, text="Procesar Video",  command=lambda: editVideo(
-    nameFile.get(), nameProject.get(), loading),   style='TButton').grid(column=0, row=4)
-filetypes = (
-    ('videos', '*.mp4'),
-    ('All files', '*.*')
-)
-
-root.mainloop()
+if __name__ == "__main__":
+    app = App()
+    app.mainloop()
