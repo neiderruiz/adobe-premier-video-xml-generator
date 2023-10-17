@@ -363,7 +363,7 @@
 									<name>Scale</name>
 									<valuemin>0</valuemin>
 									<valuemax>1000</valuemax>
-									<value>25</value>
+									<value>{{miniatureScale}}</value>
 								</parameter>
 								<parameter authoringApp="PremierePro">
 									<parameterid>rotation</parameterid>
@@ -376,8 +376,8 @@
 									<parameterid>center</parameterid>
 									<name>Center</name>
 									<value>
-										<horiz>0.244792</horiz>
-										<vert>0.37037</vert>
+										<horiz>{{miniatureHorizontalPosition}}</horiz>
+										<vert>{{miniatureVerticalPosition}}</vert>
 									</value>
 								</parameter>
 								<parameter authoringApp="PremierePro">
@@ -410,14 +410,14 @@
 									<name>left</name>
 									<valuemin>0</valuemin>
 									<valuemax>100</valuemax>
-									<value>0</value>
+									<value>{{miniatureLeftCutPercentage}}</value>
 								</parameter>
 								<parameter authoringApp="PremierePro">
 									<parameterid>right</parameterid>
 									<name>right</name>
 									<valuemin>0</valuemin>
 									<valuemax>100</valuemax>
-									<value>50</value>
+									<value>{{miniarureRightCutPercentage}}</value>
 								</parameter>
 								<parameter authoringApp="PremierePro">
 									<parameterid>top</parameterid>
