@@ -7,6 +7,7 @@ class App(tk.Tk):
         super().__init__()
 
         self.title('Convert Premier')
+        self.iconbitmap('./assets/icon.ico')
 
         self.frm = ttk.Frame(self, padding=10, width=300, height=400)
         self.frm.grid()
