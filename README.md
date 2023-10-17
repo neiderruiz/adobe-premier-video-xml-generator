@@ -49,7 +49,7 @@ py main.py
 - ejecutamos el comando
 
 ```
-pyinstaller --noconsole '.\main.py'
+ pyinstaller main.spec
 ```
 
 - se creara una carpeta **dist** y otra **build**
