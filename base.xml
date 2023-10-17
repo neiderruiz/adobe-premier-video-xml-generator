@@ -529,6 +529,23 @@
 							<mediatype>audio</mediatype>
 							<trackindex>1</trackindex>
 						</sourcetrack>
+						<filter>
+							<effect>
+								<name>Audio Levels</name>
+								<effectid>audiolevels</effectid>
+								<effectcategory>audiolevels</effectcategory>
+								<effecttype>audiolevels</effecttype>
+								<mediatype>audio</mediatype>
+								<pproBypass>false</pproBypass>
+								<parameter authoringApp="PremierePro">
+									<parameterid>level</parameterid>
+									<name>Level</name>
+									<valuemin>0</valuemin>
+									<valuemax>3.98109</valuemax>
+									<value>3.16228</value>
+								</parameter>
+							</effect>
+						</filter>
 						<link>
 							<linkclipref>clipitem-4</linkclipref>
 							<mediatype>audio</mediatype>
@@ -559,6 +576,9 @@
 							<asc_sat></asc_sat>
 							<lut2></lut2>
 						</colorinfo>
+						<labels>
+							<label2>Caribbean</label2>
+						</labels>
 					</clipitem>
 					<enabled>TRUE</enabled>
 					<locked>FALSE</locked>
