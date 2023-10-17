@@ -1,5 +1,13 @@
 # adobe-premier-video-xml-generator
-![image](https://user-images.githubusercontent.com/57574910/187046129-21fef922-1c65-475a-af55-c595021e6840.png)
+
+## view start
+
+![image](https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/65687eac-e32f-42b9-98e3-ffb774cd49ab)
+
+## config miniature
+
+![image](https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/042ad506-f10e-4485-ae6d-f39e046abf3b)
+
 ## instalación
 
 * ### Clonar repositiorio
