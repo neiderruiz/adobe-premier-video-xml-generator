@@ -5,6 +5,7 @@ import librosa
 import librosa.display
 from modules import actions
 from tkinter import messagebox
+import urllib.parse
 
 def getTimeEnd(y, sr)-> tuple[tuple,int]:
     inner = 0
@@ -95,10 +96,13 @@ def edit_video(newVideo: str, nameProject: str, loading,  miniature: dict = None
 
     duration = video.duration * 60
     videoName = video.filename
-    baseVideo = os.path.realpath(videoName).replace('\\', '/').split(':')
-    routeVideo = f"file://localhost/{baseVideo[0]}%3a{baseVideo[1]}"
-    baseAudio = os.path.realpath(nameAudio).replace('\\', '/').split(':')
-    routeAudio = f"file://localhost/{baseAudio[0]}%3a{baseAudio[1]}"
+    routeVideo = "file://localhost" + urllib.parse.quote(os.path.abspath(videoName))
+        
+    nameAudio = f"./{nameFolder}/{nameProject}.mp3"
+    video.audio.write_audiofile(nameAudio)
+    routeAudio = "file://localhost" + urllib.parse.quote(os.path.abspath(nameAudio))
+
+
     # routeProject.set(os.path.realpath(nameFolder))
 
     y, sr = librosa.load(nameAudio)
