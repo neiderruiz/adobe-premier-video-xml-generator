@@ -2,6 +2,9 @@ import tkinter as tk
 from tkinter import ttk, filedialog as fd, messagebox
 import threading
 from modules import actions
+import os
+os.environ['TK_SILENCE_DEPRECATION'] = '1'
+
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -156,7 +159,6 @@ class App(tk.Tk):
 
 def run_translate(new_video: str, name_project: str, loading, miniature: dict = None):
     print(miniature)
-
     t = threading.Thread(target=actions.edit_video, args=(
         new_video,
         name_project,
