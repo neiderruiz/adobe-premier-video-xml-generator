@@ -57,3 +57,43 @@ py main.py
 - ingresas a **dist/main** y encontraras un archivo main.exe el cual puedes ejecutar pulsando en el
 
 
+
+# run project in macOs
+
+```bash
+brew uninstall tcl-tk
+```
+
+```bash
+brew install tcl-tk
+```
+
+```bash
+brew install pyenv
+```
+
+```bash
+pyenv install 3.10.6
+```
+
+
+```bash
+pip install virtualenv
+```
+
+```bash
+virtualenv env --system-site-packages
+```
+
+```bash
+source env/bin/activate
+```
+
+```bash
+pip install -r requirements.txt
+```
+
+```bash
+pyinstaller main.py
+```
+
