@@ -89,6 +89,16 @@ class App(tk.Tk):
         self.file_label = ttk.Label(self.frm, text="")
         self.file_label.grid(column=0, row=5)
 
+        self.select_dir_btn = self.create_button(
+        self.frm, "Select Directory Save Project", self.select_directory, 6, 0)
+        self.dir_label = ttk.Label(self.frm, text="")
+        self.dir_label.grid(column=0, row=7)
+
+    def select_directory(self):
+        directory = fd.askdirectory()
+        if directory:  # Si se seleccionó un directorio
+            self.dir_label.config(text=directory)
+
     def create_entry(self, parent, label_text, row, column, validate=False, textvariable=None):
         label = ttk.Label(parent, text=label_text)
         label.grid(column=column, row=row * 2)
@@ -128,6 +138,9 @@ class App(tk.Tk):
         loading_label = ttk.Label(self.frm, textvariable=loading)
         # Ajusta la fila y columna como necesites
         loading_label.grid(column=0, row=6)
+        dir_label = self.dir_label.cget("text")
+        if(dir_label == ""):
+            messagebox.showerror('Error', 'Selecciona un directorio para guardar el proyecto')
 
         run_translate(
             new_video,
@@ -139,7 +152,8 @@ class App(tk.Tk):
                 'left_cut_percentage': self.left_cut_percentage_var.get(),
                 'vertical_position': self.vertical_position_var.get(),
                 'horizontal_position': self.horizontal_position_var.get(),
-            }
+            },
+            save_directory=dir_label
         )
 
     def validate_input(self, value_if_allowed):
@@ -157,13 +171,14 @@ class App(tk.Tk):
         self.process_video_btn.grid_remove()  # Oculta el botón
 
 
-def run_translate(new_video: str, name_project: str, loading, miniature: dict = None):
+def run_translate(new_video: str, name_project: str, loading, miniature: dict = None, save_directory: str = None):
     print(miniature)
     t = threading.Thread(target=actions.edit_video, args=(
         new_video,
         name_project,
         loading,
-        miniature
+        miniature,
+        save_directory
     ))
     t.start()
 
