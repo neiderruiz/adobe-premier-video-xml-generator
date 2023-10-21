@@ -73,32 +73,36 @@ def fill_template(template: str,newTemplate: str, values: tuple):
             newTemplate.write(line)
     return True
 
-def edit_video(newVideo: str, nameProject: str, loading,  miniature: dict = None):
+def edit_video(newVideo: str, nameProject: str, loading, miniature: dict = None, save_directory: str = None):
     if newVideo == '':
         messagebox.showerror('Error', 'Selecciona un archivo')
         return
     if nameProject == '':
         messagebox.showerror('Error', 'Ingresar nombre de proyecto')
         return
+
+    if save_directory is None:
+        save_directory = "projects"
+    
     nameProject = nameProject.lower().replace(' ', '-')
-    nameFolder = f"projects/{nameProject}"
-    if os.path.isdir(nameFolder) is not True:
+    nameFolder = os.path.join(save_directory, nameProject)
+    
+    if not os.path.isdir(nameFolder):
         os.makedirs(nameFolder.lower())
 
     loading.set('procesando...')
 
     templateAdobe = open('./base.xml')
-    nameFileXml = f"./{nameFolder}/{nameProject}.xml"
+    nameFileXml = os.path.join(nameFolder, f"{nameProject}.xml")
     ourputAdobe = open(nameFileXml, 'w')
     video = VideoFileClip(newVideo)
-    nameAudio = f"./{nameFolder}/{nameProject}.mp3"
+    nameAudio = os.path.join(nameFolder, f"{nameProject}.mp3")
     video.audio.write_audiofile(nameAudio)
 
     duration = video.duration * 60
     videoName = video.filename
     routeVideo = "file://localhost" + urllib.parse.quote(os.path.abspath(videoName))
         
-    nameAudio = f"./{nameFolder}/{nameProject}.mp3"
     video.audio.write_audiofile(nameAudio)
     routeAudio = "file://localhost" + urllib.parse.quote(os.path.abspath(nameAudio))
 
