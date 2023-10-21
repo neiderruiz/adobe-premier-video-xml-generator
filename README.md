@@ -6,9 +6,18 @@
 
 - add a thumbnail layer to the right side of your video
 
+<img width="1425" alt="image" src="https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/e1854882-806d-4482-af66-5de99ceac21c">
+
+
 - adds a layer with the 1920 x 1080 screen display
 
+<img width="1425" alt="image" src="https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/1515e765-c887-4ea5-85f0-6418bd229dc2">
+
+
 - Add another layer in which you see yourself in full screen
+
+<img width="1425" alt="image" src="https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/0eac4c5f-a9ad-440f-91ba-fceb7557cbbe">
+
 
 ## View start
 
