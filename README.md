@@ -82,6 +82,10 @@ python main.py
 
 # how install MacOs
 
+<img width="400" alt="image" src="https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/9a4bf895-c5e0-420f-adfa-9fc0296cf987">
+
+<img width="400" alt="image" src="https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/97a79b74-a64f-47e3-8ad6-1ab91f33639b">
+
 ```bash
 git clone https://github.com/neiderruiz/adobe-premier-video-xml-generator.git
 ```
@@ -133,7 +137,7 @@ pip install -r requirements.txt
 python main.py
 ```
 
-- make executable
+## make executable
 
 ```bash
 pyinstaller main.py
