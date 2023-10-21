@@ -6,78 +6,91 @@
 
 - add a thumbnail layer to the right side of your video
 
-<img width="1425" alt="image" src="https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/e1854882-806d-4482-af66-5de99ceac21c">
-
+<img width="500" alt="image" src="https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/e1854882-806d-4482-af66-5de99ceac21c">
 
 - adds a layer with the 1920 x 1080 screen display
 
-<img width="1425" alt="image" src="https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/1515e765-c887-4ea5-85f0-6418bd229dc2">
-
+<img width="500" alt="image" src="https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/1515e765-c887-4ea5-85f0-6418bd229dc2">
 
 - Add another layer in which you see yourself in full screen
 
-<img width="1425" alt="image" src="https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/0eac4c5f-a9ad-440f-91ba-fceb7557cbbe">
+<img width="500" alt="image" src="https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/0eac4c5f-a9ad-440f-91ba-fceb7557cbbe">
 
+# Windows | MacOs
 
-## View start
+## View start Windows
 
-![image](https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/65687eac-e32f-42b9-98e3-ffb774cd49ab)
+<img width="400" src="https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/65687eac-e32f-42b9-98e3-ffb774cd49ab">
 
 ## Config miniature
 
-![image](https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/042ad506-f10e-4485-ae6d-f39e046abf3b)
+<img width="400" src="https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/042ad506-f10e-4485-ae6d-f39e046abf3b">
+
 
 ## Result adobe premier
 
-![image](https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/bb579cc6-0922-4563-bf56-5f95fc0b246f)
+<img width="500" src="https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/bb579cc6-0922-4563-bf56-5f95fc0b246f" />
 
-## instalación
+## how install Windows
 
-* ### Clonar repositiorio
-```
+*  clone project
+
+```bash
 git clone https://github.com/neiderruiz/adobe-premier-video-xml-generator.git
 ```
-* ### Crear entorno para el proyecto
 
+```bash
+cd adobe-premier-video-xml-generator
 ```
-// python menor que 3.10
+
+- make environment
+
+```bash
 python -m venv env
+```
 
-// python 3.10
-py -m ven env
-
-// activar entorno 
-
+- activate environment
+```bash
 env\Scripts\activate
-
 ```
 
-* ### instalar requerimientos
+* Install requirements
 
-``
+```bash
 pip install -r requirements.txt
-``
+```
 
-* ### ejecucion del proyecto
+- run project
 
 ```
-py main.py
+python main.py
 ```
-# Generar ejecutable .exe
 
-- ejecutamos el comando
+## make executable .exe
 
-```
+- run command
+
+```bash
  pyinstaller main.spec
 ```
 
-- se creara una carpeta **dist** y otra **build**
+- A **dist** folder and another **build** folder will be created
 
-- ingresas a **dist/main** y encontraras un archivo main.exe el cual puedes ejecutar pulsando en el
+- Enter **dist/main** and you will find a main.exe file which you can run by clicking on the
 
 
 
-# run project in macOs
+# how install MacOs
+
+```bash
+git clone https://github.com/neiderruiz/adobe-premier-video-xml-generator.git
+```
+
+```bash
+cd adobe-premier-video-xml-generator
+```
+
+- Mac chip m1 | m2
 
 ```bash
 brew uninstall tcl-tk
@@ -87,30 +100,40 @@ brew uninstall tcl-tk
 brew install tcl-tk
 ```
 
+- admin versions python
+
 ```bash
 brew install pyenv
 ```
-
+- we will use python 3.10.6
 ```bash
 pyenv install 3.10.6
 ```
 
+- create enviroment
 
 ```bash
-pip install virtualenv
-```
-
-```bash
-virtualenv env --system-site-packages
+python -m venv env
 ```
 
 ```bash
 source env/bin/activate
 ```
 
+- install requirements
+
 ```bash
 pip install -r requirements.txt
 ```
+
+
+- run project
+
+```bash
+python main.py
+```
+
+- make executable
 
 ```bash
 pyinstaller main.py
