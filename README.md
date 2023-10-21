@@ -1,5 +1,15 @@
 # adobe-premier-video-xml-generator
 
+## Description
+
+- convert a video recorded with the following dimensions 3840 × 1080 and convert it into an xml configured for adobe premier
+
+- add a thumbnail layer to the right side of your video
+
+- adds a layer with the 1920 x 1080 screen display
+
+- Add another layer in which you see yourself in full screen
+
 ## View start
 
 ![image](https://github.com/neiderruiz/adobe-premier-video-xml-generator/assets/57574910/65687eac-e32f-42b9-98e3-ffb774cd49ab)
